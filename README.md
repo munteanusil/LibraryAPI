@@ -1,7 +1,7 @@
-📚 Bookstore API Backend
+Bookstore API Backend
 
 
-🚀 Overview
+Overview
 A production-ready, scalable backend API for a modern online bookstore management system. This robust solution provides comprehensive CRUD operations for managing books, authors, and categories with optimized performance and clean architecture patterns.
 
 Screenshots:
@@ -10,8 +10,8 @@ API Documentation	Database Schema
 
 <img width="292" height="552" alt="Swagger Documentation" src="https://github.com/user-attachments/assets/f0b3c53c-2138-4251-8cca-24de2bd3e7b9" />	<img width="375" height="476" alt="Database Schema" src="https://github.com/user-attachments/assets/ac20fce1-ee9a-4276-9a75-0d877c268fd0" />
 
-✨ Core Features
-📖 Book Management
+ Core Features
+ Book Management
 Create: Add new books with comprehensive metadata
 
 Read: Retrieve books with pagination, filtering, and detailed views
@@ -22,28 +22,28 @@ Delete: Remove books from inventory
 
 Search: Advanced search capabilities across multiple fields
 
-👤 Author Management
+Author Management
 CRUD Operations: Full lifecycle management for authors
 
 Integrity Checks: Safe deletion with relational integrity validation
 
 Biographical Data: Support for detailed author profiles and metadata
 
-📁 Category Management
+Category Management
 Hierarchical Organization: Structured book categorization
 
 Validation: Protected deletions ensuring data consistency
 
 Flexible Taxonomy: Adaptable category system for diverse collections
 
-🔗 Entity Relationships
+ Entity Relationships
 One-to-Many Associations: Books ↔ Authors / Books ↔ Categories
 
 Referential Integrity: Enforced through database constraints
 
 Navigation Properties: Efficient data traversal via Entity Framework
 
-🛠 Technology Stack
+Technology Stack
 Component	Technology	Purpose
 Framework	.NET 8 ASP.NET Core Web API	High-performance REST API foundation
 ORM	Entity Framework Core 8	Data access and object-relational mapping
@@ -52,8 +52,9 @@ Documentation	Swagger/OpenAPI 3.0	Interactive API documentation
 Object Mapping	AutoMapper	Clean DTO-entity transformations
 Validation	FluentValidation / DataAnnotations	Robust input validation
 Serialization	System.Text.Json	High-performance JSON handling
-🏗 Architecture & Implementation
-📐 Clean Architecture
+ Architecture & Implementation
+ 
+ Clean Architecture
 text
 Bookstore.API/
 ├── Controllers/          # API endpoints with HTTP semantics
@@ -61,7 +62,7 @@ Bookstore.API/
 ├── Infrastructure/      # Data access and external services
 ├── Application/         # Use cases and DTOs
 └── Shared/             # Cross-cutting concerns
-🔧 Key Implementations
+ Key Implementations
 Performance Optimizations
 .AsNoTracking() for read-only queries
 
@@ -112,7 +113,8 @@ GET     /api/categories/{id}        # Get category with books
 POST    /api/categories              # Create category
 PUT     /api/categories/{id}        # Update category
 DELETE  /api/categories/{id}        # Delete category (if no books)
-🚦 Getting Started
+
+Getting Started
 Prerequisites
 .NET 8 SDK
 
@@ -172,7 +174,7 @@ POST /api/books	< 100ms	1000 req/sec
 Complex Query	< 200ms	500 req/sec
 🔮 Future Roadmap
 Phase 2: Enhanced Capabilities (Q2 2024)
-🔐 Authentication & Authorization
+ Authentication & Authorization
 
 JWT-based authentication
 
@@ -181,7 +183,7 @@ Role-based access control (Admin/User)
 OAuth 2.0 integration
 
 Phase 3: Frontend Integration (Q3 2024)
-🎨 Angular/React Frontend
+ Angular/React Frontend
 
 Responsive web interface
 
@@ -190,7 +192,7 @@ Real-time updates with SignalR
 Advanced search and filtering UI
 
 Phase 4: Intelligent Features (Q4 2024)
-🤖 Chatbot Integration
+ Chatbot Integration
 
 WhatsApp Business API integration
 
@@ -211,7 +213,7 @@ Customer behavior insights
 
 Automated reporting
 
-🤝 Contributing
+ Contributing
 Fork the repository
 
 Create a feature branch (git checkout -b feature/amazing-feature)
@@ -222,5 +224,5 @@ Push to branch (git push origin feature/amazing-feature)
 
 Open a Pull Request
 
-📄 License
+ License
 This project is licensed under the MIT License - see the LICENSE file for details.
