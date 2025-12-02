@@ -12,7 +12,7 @@ namespace Library.Infrastructure.Data
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<AuthorGeneres> AuthorGeneres { get; set; }
-        public LibraryContext(DbContextOptions<LibraryContext> options) :base()
+        public LibraryContext(DbContextOptions<LibraryContext> options) :base(options)
         {
             
         }
