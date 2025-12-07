@@ -4,9 +4,8 @@ Bookstore API Backend
 Overview
 A production-ready, scalable backend API for a modern online bookstore management system. This robust solution provides comprehensive CRUD operations for managing books, authors, and categories with optimized performance and clean architecture patterns.
 
-Screenshots:
+Screenshots from front-end:
 
-API Documentation	Database Schema
 
 <img width="292" height="552" alt="Swagger Documentation" src="https://github.com/user-attachments/assets/f0b3c53c-2138-4251-8cca-24de2bd3e7b9" />	<img width="375" height="476" alt="Database Schema" src="https://github.com/user-attachments/assets/ac20fce1-ee9a-4276-9a75-0d877c268fd0" />
 
