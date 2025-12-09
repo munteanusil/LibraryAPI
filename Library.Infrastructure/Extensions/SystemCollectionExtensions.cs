@@ -1,16 +1,11 @@
 ﻿using Library.Application.DTOs.Authors;
 using Library.Application.Interfaces;
 using Library.Infrastructure.Data;
-using Library.Infrastructure.Data.Configuration;
 using Library.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FluentValidation;
 
 namespace Library.Infrastructure.Extensions
 {
@@ -39,6 +34,12 @@ namespace Library.Infrastructure.Extensions
         public static IServiceCollection ConfigureAutoMapper(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(AuthorMappingProfile).Assembly);
+            return services;
+        }
+
+        public static IServiceCollection ConfigureValidation(this IServiceCollection services)
+        {
+            services.AddValidatorsFromAssemblyContaining<CreateAuthorValidator>();
             return services;
         }
     }

@@ -12,12 +12,14 @@ namespace LibraryAPI
             // Add services to the container.
 
             builder.Services.AddControllers();
+               
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.ConfigureEFCore(builder.Configuration);
             builder.Services.ConfigureRepositories();
             builder.Services.ConfigureAutoMapper();
+            builder.Services.ConfigureValidation();
             
                 
             var app = builder.Build();
