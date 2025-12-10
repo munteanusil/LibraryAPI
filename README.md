@@ -7,13 +7,13 @@ A production-ready, scalable backend API for a modern online bookstore managemen
 Screenshots for API and App:
 
 APi with swagger:
-<img width="1595" height="715" alt="Screenshot 2025-12-10 110013" src="https://github.com/user-attachments/assets/0c794323-d71a-4685-9c4b-e8ca4c3cebf5" />
-<img width="1546" height="715" alt="Screenshot 2025-12-10 105254" src="https://github.com/user-attachments/assets/01b44fb3-aefc-4f7c-ab97-17c9c774b477" />
+<img width="1195" height="515" alt="Screenshot 2025-12-10 110013" src="https://github.com/user-attachments/assets/0c794323-d71a-4685-9c4b-e8ca4c3cebf5" />
+<img width="1146" height="515" alt="Screenshot 2025-12-10 105254" src="https://github.com/user-attachments/assets/01b44fb3-aefc-4f7c-ab97-17c9c774b477" />
 
 Api working With front end Telegram Chat Bot:
-<img width="1032" height="709" alt="Screenshot 2025-12-10 105038" src="https://github.com/user-attachments/assets/d99cec89-a8dc-46cf-aff6-e737d1e71410" />
-<img width="719" height="711" alt="Screenshot 2025-12-10 105135" src="https://github.com/user-attachments/assets/6cb53e57-28a4-4595-b59c-a329d225f74b" />
-<img width="983" height="707" alt="Screenshot 2025-12-10 105106" src="https://github.com/user-attachments/assets/6e6a72d6-73ac-4daf-bc9c-28f9ac726781" />
+<img width="832" height="509" alt="Screenshot 2025-12-10 105038" src="https://github.com/user-attachments/assets/d99cec89-a8dc-46cf-aff6-e737d1e71410" />
+<img width="832" height="509" alt="Screenshot 2025-12-10 105135" src="https://github.com/user-attachments/assets/6cb53e57-28a4-4595-b59c-a329d225f74b" />
+<img width="832" height="750907" alt="Screenshot 2025-12-10 105106" src="https://github.com/user-attachments/assets/6e6a72d6-73ac-4daf-bc9c-28f9ac726781" />
 
 
 
