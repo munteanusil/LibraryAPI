@@ -24,28 +24,30 @@ namespace LibraryAPI.Controllers
             IValidator<CreateAuthorDto> validator,
             IValidator<PaginatedDto> paginatedValidator)
         {
-           _repository = repository;
+            _repository = repository;
             _mapper = mapper;
             _validator = validator;
             _paginatedValidator = paginatedValidator;
         }
- 
-        [HttpPost] 
-        public async Task<IActionResult> Post(CreateAuthorDto authorDto,CancellationToken cancellationToken)
+
+        [HttpPost]
+        public async Task<IActionResult> Post(CreateAuthorDto authorDto, CancellationToken cancellationToken)
         {
-             var validationResult = await _validator.ValidateAsync(authorDto, cancellationToken);
+            var validationResult = await _validator.ValidateAsync(authorDto, cancellationToken);
             if (validationResult.IsValid)
             {
+                //var authorToCreate = _mapper.Map<Author>(authorDto);
+                //authorToCreate.Books = _mapper.Map<List<Book>>(authorDto.Books);
                 await _repository.CreateAuthor(_mapper.Map<Author>(authorDto), cancellationToken);
                 return Created();
             }
 
             return BadRequest(validationResult.Errors.Select(e => e.ErrorMessage));
-          
+
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]PaginatedDto dto, CancellationToken cancellationToken)
+        public async Task<IActionResult> Get([FromQuery] PaginatedDto dto, CancellationToken cancellationToken)
         {
             var validationResult = await _paginatedValidator.ValidateAsync(dto, cancellationToken);
             if (!validationResult.IsValid)
@@ -59,5 +61,34 @@ namespace LibraryAPI.Controllers
 
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
+        {
+            var author = await _repository.GetAuthorById(id, cancellationToken);
+            if(author == null)
+            {
+                return NotFound();
+            }
+            return Ok(_mapper.Map<AuthorDto>(author));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(AuthorDto authorDto,CancellationToken cancellationToken)
+        {
+            var validationResult = await _validator.ValidateAsync(authorDto, cancellationToken);
+            if (validationResult.IsValid)
+            {
+                await _repository.UpdateAuthor(_mapper.Map<Author>(authorDto), cancellationToken);
+                return Created();
+            }
+            return BadRequest(validationResult.Errors.Select(e => e.ErrorMessage));
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteGet(int id, CancellationToken cancellationToken)
+        {
+            await _repository.DeleteAuthor(id, cancellationToken);
+            return Ok();
+        }
     }
 }

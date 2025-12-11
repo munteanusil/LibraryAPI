@@ -1,4 +1,6 @@
 using Library.Infrastructure.Extensions;
+using LibraryAPI.Middlewares;
+using Microsoft.AspNetCore.Diagnostics;
 
 
 namespace LibraryAPI
@@ -33,6 +35,7 @@ namespace LibraryAPI
 
             app.UseHttpsRedirection();
 
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseAuthorization();
 
 

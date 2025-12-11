@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace Library.Application.DTOs.Books
 {
-    internal class CreateBookDto
+    public class CreateBookDto
     {
+
+        public string Title { get; set; }
+
+        public int CategoryId { get; set; }
+
+        public string ISBN { get; set; }
+
+        public int Stock { get; set; }
     }
 }
