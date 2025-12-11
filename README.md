@@ -4,13 +4,26 @@ Bookstore API Backend
 Overview
 A production-ready, scalable backend API for a modern online bookstore management system. This robust solution provides comprehensive CRUD operations for managing books, authors, and categories with optimized performance and clean architecture patterns.
 
-Screenshots from front-end:
+Screenshots for API and App:
+
+APi with swagger:
+
+<img width="432" height="515" alt="Screenshot 2025-12-10 110013" src="https://github.com/user-attachments/assets/0c794323-d71a-4685-9c4b-e8ca4c3cebf5" />
+<img width="432" height="515" alt="Screenshot 2025-12-10 105254" src="https://github.com/user-attachments/assets/01b44fb3-aefc-4f7c-ab97-17c9c774b477" />
+
+Api working With front end Telegram Chat Bot:
+
+<img width="332" height="315" alt="Screenshot 2025-12-10 105038" src="https://github.com/user-attachments/assets/d99cec89-a8dc-46cf-aff6-e737d1e71410" />
+<img width="332" height="315" alt="Screenshot 2025-12-10 105135" src="https://github.com/user-attachments/assets/6cb53e57-28a4-4595-b59c-a329d225f74b" />
+
+<img width="332" height="315" alt="Screenshot 2025-12-10 105106" src="https://github.com/user-attachments/assets/6e6a72d6-73ac-4daf-bc9c-28f9ac726781" />
+
+Screen form Db, I used SQLite for simplicity but the project can be compatible and you can change the db provider to any SQL Server instance.
 
 
-<img width="292" height="552" alt="Swagger Documentation" src="https://github.com/user-attachments/assets/f0b3c53c-2138-4251-8cca-24de2bd3e7b9" />	<img width="375" height="476" alt="Database Schema" src="https://github.com/user-attachments/assets/ac20fce1-ee9a-4276-9a75-0d877c268fd0" />
+<img width="332" height="315" alt="Screenshot 2025-12-10 105406" src="https://github.com/user-attachments/assets/204cd08e-30bb-4b82-b730-3d0ee85bdf94" />
 
- Core Features
- Book Management
+ Core Features : - Book Management
 Create: Add new books with comprehensive metadata
 
 Read: Retrieve books with pagination, filtering, and detailed views
@@ -147,7 +160,7 @@ json
     }
   }
 }
-🧪 Testing & Quality
+ Testing & Quality
 Development Tools
 Swagger UI: Interactive API testing at /swagger
 
@@ -202,7 +215,7 @@ Natural language book search
 Personalized recommendations
 
 Phase 5: Advanced Analytics (Q1 2025)
-📈 Business Intelligence
+Business Intelligence
 
 Sales analytics dashboard
 
