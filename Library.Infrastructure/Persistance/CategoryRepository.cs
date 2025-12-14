@@ -43,7 +43,7 @@ namespace Library.Infrastructure.Persistance
             return await _libraryContext.Categories.FirstOrDefaultAsync(c => c.Id == id, ct);
         }
 
-        public async Task<PaginetedList<Category>> GetCategorys(int page, int pageSize, CancellationToken ct = default)
+        public async Task<PaginatedList<Category>> GetCategorys(int page, int pageSize, CancellationToken ct = default)
         {
             var total = await _libraryContext.Categories.CountAsync(ct);
             var categories = await _libraryContext.Categories
@@ -53,7 +53,7 @@ namespace Library.Infrastructure.Persistance
                  .Take(pageSize)
                  .ToListAsync(ct);
 
-            return new PaginetedList<Category>(categories, page, (int)Math.Ceiling((double)total / pageSize));
+            return new PaginatedList<Category>(categories, page, (int)Math.Ceiling((double)total / pageSize));
 
         }
 

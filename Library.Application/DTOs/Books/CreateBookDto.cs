@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.Application.DTOs.Categories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,7 @@ namespace Library.Application.DTOs.Books
         public string ISBN { get; set; }
 
         public int Stock { get; set; }
+
+        public CategoryDto?  Category { get; set; }
     }
 }

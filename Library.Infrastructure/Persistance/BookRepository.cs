@@ -45,7 +45,7 @@ namespace Library.Infrastructure.Persistance
                 .FirstOrDefaultAsync(b => b.Id == id,ct);
         }
 
-        public async Task<PaginetedList<Book>> GetBooks(int page, int pageSize, CancellationToken ct = default)
+        public async Task<PaginatedList<Book>> GetBooks(int page, int pageSize, CancellationToken ct = default)
         {
             var total = await _libraryContext.Books.CountAsync(ct);
             var books = await _libraryContext.Books
@@ -55,7 +55,7 @@ namespace Library.Infrastructure.Persistance
                 .Take(pageSize)
                 .ToListAsync(ct);
 
-            return new PaginetedList<Book>(books, page, (int)Math.Ceiling((double)total / pageSize));
+            return new PaginatedList<Book>(books, page, (int)Math.Ceiling((double)total / pageSize));
         }
 
         public async Task UpdateBook(Book book, CancellationToken ct = default)

@@ -38,40 +38,31 @@ namespace LibraryAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(CreateBookDto bookDto, CancellationToken cancellationToken)
         {
-            var validationResult = await _validator.ValidateAsync(bookDto, cancellationToken);
-            if (validationResult.IsValid)
-            {
+         
                 await _repository.CreateBook(_mapper.Map<Book>(bookDto), cancellationToken);
                 return Created();
-            }
-            return BadRequest(validationResult.Errors.Select(e => e.ErrorMessage));
+            
 
         }
 
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] PaginatedDto dto, CancellationToken cancellationToken)
         {
-            var validationResult = await _paginatedValidator.ValidateAsync(dto, cancellationToken);
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult.Errors.Select( e =>e.ErrorMessage));
-            }
+          
+               
             var books = await _repository.GetBooks(dto.Page, dto.PageSize);
             var booksDto = _mapper.Map<List<BookDto>>(books.Items);
-            var result = new PaginetedList<BookDto>(booksDto, dto.Page, dto.PageSize);
+            var result = new PaginatedList<BookDto>(booksDto, dto.Page, dto.PageSize);
             return Ok(result);
         }
 
         [HttpPut]
         public async Task<IActionResult> Put(BookDto bookdto, CancellationToken cancellationToken)
         {
-            var validationResult = await _validator.ValidateAsync( bookdto, cancellationToken);
-            if (validationResult.IsValid)
-            {
+           
                 await _repository.UpdateBook(_mapper.Map<Book>(bookdto),cancellationToken);
-                return Created();
-            }
-            return BadRequest(validationResult.Errors.Select(e => e.ErrorMessage));
+                return Ok();
+            
         }
 
         [HttpDelete]

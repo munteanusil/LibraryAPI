@@ -10,7 +10,7 @@ namespace Library.Application.Interfaces
 {
     public interface IBookRepository
     {
-        Task<PaginetedList<Book>> GetBooks(int page, int pageSize, CancellationToken ct = default);
+        Task<PaginatedList<Book>> GetBooks(int page, int pageSize, CancellationToken ct = default);
 
         Task<Book?> GetBookById(int id,CancellationToken ct = default);
 

@@ -13,9 +13,10 @@ namespace Library.Application.DTOs.Books
         public BookMappingProfile()
         {
             CreateMap<CreateBookDto, Book>()
-                .ReverseMap();
+                 .ReverseMap();
+
             CreateMap<Book, BookDto>()
-               .ReverseMap();
+                .ReverseMap();
         }
     }
 }

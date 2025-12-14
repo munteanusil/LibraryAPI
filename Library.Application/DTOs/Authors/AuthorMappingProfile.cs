@@ -13,9 +13,9 @@ namespace Library.Application.DTOs.Authors
         public AuthorMappingProfile()
         {
             CreateMap<CreateAuthorDto, Author>()
+                  .ReverseMap();
+            CreateMap<AuthorDto, Author>()
                 .ReverseMap();
-            CreateMap<Author, AuthorDto>()
-               .ReverseMap();
         }
     }
 }

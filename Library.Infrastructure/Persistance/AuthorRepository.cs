@@ -38,10 +38,12 @@ namespace Library.Infrastructure.Persistance
 
         public async Task<Author?> GetAuthorById(int id, CancellationToken ct = default)
         {
-            return await _libraryContext.Authors.FirstOrDefaultAsync(a => a.Id == id, ct);
+            return await _libraryContext.Authors
+                .Include(a => a.Books)
+                .FirstOrDefaultAsync(a => a.Id == id, ct);
         }
 
-        public async Task<PaginetedList<Author>> GetAuthors(int page, int pageSize, CancellationToken ct = default)
+        public async Task<PaginatedList<Author>> GetAuthors(int page, int pageSize, CancellationToken ct = default)
         {
             var total = await _libraryContext.Authors.CountAsync(ct);
             var authors = await _libraryContext.Authors
@@ -51,7 +53,7 @@ namespace Library.Infrastructure.Persistance
                 .Take(pageSize)
                 .ToListAsync(ct);
             
-            return new PaginetedList<Author>(authors, page, (int)Math.Ceiling((double)total/pageSize));
+            return new PaginatedList<Author>(authors, page, (int)Math.Ceiling((double)total/pageSize));
         }
 
         public async Task UpdateAuthor(Author author, CancellationToken ct = default)

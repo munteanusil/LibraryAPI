@@ -10,7 +10,7 @@ namespace Library.Application.Interfaces
 {
     public interface IAuthorRepository
     {
-        Task<PaginetedList<Author>> GetAuthors(int page, int pageSize, CancellationToken ct = default);
+        Task<PaginatedList<Author>> GetAuthors(int page, int pageSize, CancellationToken ct = default);
 
         Task<Author?> GetAuthorById(int id,CancellationToken ct = default);
 

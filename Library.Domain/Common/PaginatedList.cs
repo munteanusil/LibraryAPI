@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Library.Domain.Common
 {
-    public class PaginetedList<T> where T : new()
+    public class PaginatedList<T> where T : new()
     {
 
-        public PaginetedList(List<T> items, int pageNumber, int pageTotals)
+        public PaginatedList(List<T> items, int pageNumber, int pageTotals)
         {
             Items = items;
             PageNumber = pageNumber;

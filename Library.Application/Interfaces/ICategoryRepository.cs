@@ -10,7 +10,7 @@ namespace Library.Application.Interfaces
 {
     public interface ICategoryRepository
     {
-        Task<PaginetedList<Category>> GetCategorys(int page, int pageSize, CancellationToken ct = default);
+        Task<PaginatedList<Category>> GetCategorys(int page, int pageSize, CancellationToken ct = default);
 
         Task<Category?> GetCategoryById(int id,CancellationToken ct = default);
 

@@ -10,7 +10,7 @@ namespace Library.Application.Interfaces
 {
     public interface IGenreRepository
     {
-        Task<PaginetedList<Genre>> GetGenres(int page, int pageSize, CancellationToken ct = default);
+        Task<PaginatedList<Genre>> GetGenres(int page, int pageSize, CancellationToken ct = default);
 
         Task<Genre?> GetGenreById(int id,CancellationToken ct = default);
 

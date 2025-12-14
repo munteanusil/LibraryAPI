@@ -4,9 +4,11 @@ using Library.Application.DTOs;
 using Library.Application.DTOs.Authors;
 using Library.Application.DTOs.Categories;
 using Library.Application.Interfaces;
+using Library.Domain.Common;
 using Library.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
 
 namespace LibraryAPI.Controllers
 {
@@ -17,43 +19,32 @@ namespace LibraryAPI.Controllers
         private readonly ILogger<CategoryController> _logger;
         private readonly ICategoryRepository _repository;
         private readonly IMapper _mapper;
-        private readonly IValidator<CreateCategoryDto> _validator;
-        private readonly IValidator<PaginatedDto> _paginatedValidator;
-
+      
         public CategoryController(ICategoryRepository repository,
-            IMapper mapper,
-             IValidator<CreateCategoryDto> validator,
-            IValidator<PaginatedDto> paginatedValidator)
+            IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _validator = validator;
-            _paginatedValidator = paginatedValidator;
+
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(CreateCategoryDto categoryDto, CancellationToken cancellationToken)
         {
-            var validationResult = await _validator.ValidateAsync(categoryDto, cancellationToken);
-            if (validationResult.IsValid)
-            {
-                await _repository.CreateCategory(_mapper.Map<Category>(categoryDto), cancellationToken);
-                return Created();
-            }
-            return BadRequest(validationResult.Errors.Select(e => e.ErrorMessage));
+            var categortyToCreate = _mapper.Map<Category>(categoryDto);
+            await _repository.CreateCategory(categortyToCreate, cancellationToken);
+            return CreatedAtAction(nameof(Get), new { id = categortyToCreate.Id, categortyToCreate });
+         
+          
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] CreateCategoryDto CategoryDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> Get([FromQuery] PaginatedDto dto, CancellationToken cancellationToken)
         {
-            var validationResult = await _validator.ValidateAsync(CategoryDto, cancellationToken);
-            if (validationResult.IsValid)
-            {
-                await _repository.CreateCategory(_mapper.Map<Category>(CategoryDto), cancellationToken);
-                return Created();
-            }
-
-            return BadRequest(validationResult.Errors.Select(e => e.ErrorMessage));
+            var categories = await _repository.GetCategorys(dto.Page, dto.PageSize, cancellationToken);
+            var categoriesDtos = _mapper.Map<List<CategoryDto>>(categories.Items);
+            var result = new PaginatedList<CategoryDto>(categoriesDtos, dto.Page, dto.PageSize);
+            return Ok(result);  
         }
 
         [HttpGet("{id}")]
@@ -70,13 +61,9 @@ namespace LibraryAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(CategoryDto categoryDto,CancellationToken cancellationToken)
         {
-            var validationResult = await _validator.ValidateAsync(categoryDto, cancellationToken);
-            if (validationResult.IsValid)
-            {
+          
                 await _repository.UpdateCategory(_mapper.Map<Category>(categoryDto), cancellationToken);
-                return Created();
-            }
-            return BadRequest(validationResult.Errors.Select(e => e.ErrorMessage));
+                return Ok();   
         }
 
 

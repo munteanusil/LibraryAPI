@@ -43,7 +43,7 @@ namespace Library.Infrastructure.Persistance
 
         }
 
-        public async Task<PaginetedList<Genre>> GetGenres(int page, int pageSize, CancellationToken ct = default)
+        public async Task<PaginatedList<Genre>> GetGenres(int page, int pageSize, CancellationToken ct = default)
         {
             var total = await _libraryContext.Genres.CountAsync(ct);
             var genres = await _libraryContext.Genres
@@ -53,7 +53,7 @@ namespace Library.Infrastructure.Persistance
                  .Take(pageSize)
                  .ToListAsync(ct);
 
-            return new PaginetedList<Genre>(genres, page, (int)Math.Ceiling((double)total / pageSize));
+            return new PaginatedList<Genre>(genres, page, (int)Math.Ceiling((double)total / pageSize));
 
         }
 

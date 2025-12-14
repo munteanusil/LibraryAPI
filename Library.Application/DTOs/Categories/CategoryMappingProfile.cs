@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Library.Application.DTOs.Categories
 {
-    public class CategpryMappingProfile : Profile
+    public class CategoryMappingProfile : Profile
     {
-        public CategpryMappingProfile()
+        public CategoryMappingProfile()
         {
-            CreateMap<CategoryDto, CategoryDto>()
-                .ReverseMap();
+            CreateMap<Category, CategoryDto>()
+                 .ReverseMap();
             CreateMap<CreateCategoryDto, Category>();
         }
     }

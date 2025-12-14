@@ -36,10 +36,9 @@ namespace LibraryAPI.Controllers
             var validationResult = await _validator.ValidateAsync(authorDto, cancellationToken);
             if (validationResult.IsValid)
             {
-                //var authorToCreate = _mapper.Map<Author>(authorDto);
-                //authorToCreate.Books = _mapper.Map<List<Book>>(authorDto.Books);
-                await _repository.CreateAuthor(_mapper.Map<Author>(authorDto), cancellationToken);
-                return Created();
+                var authorToCreate = _mapper.Map<Author>(authorDto);
+                await _repository.CreateAuthor(authorToCreate, cancellationToken);
+                return CreatedAtAction(nameof(Get),new { id = authorToCreate.Id }, _mapper.Map<AuthorDto>(authorToCreate));
             }
 
             return BadRequest(validationResult.Errors.Select(e => e.ErrorMessage));
@@ -56,7 +55,7 @@ namespace LibraryAPI.Controllers
             }
             var authors = await _repository.GetAuthors(dto.Page, dto.PageSize);
             var authorsDto = _mapper.Map<List<AuthorDto>>(authors.Items);
-            var result = new PaginetedList<AuthorDto>(authorsDto, dto.Page, dto.PageSize);
+            var result = new PaginatedList<AuthorDto>(authorsDto, dto.Page, dto.PageSize);
             return Ok(result);
 
         }
@@ -79,7 +78,7 @@ namespace LibraryAPI.Controllers
             if (validationResult.IsValid)
             {
                 await _repository.UpdateAuthor(_mapper.Map<Author>(authorDto), cancellationToken);
-                return Created();
+                return Ok();
             }
             return BadRequest(validationResult.Errors.Select(e => e.ErrorMessage));
         }

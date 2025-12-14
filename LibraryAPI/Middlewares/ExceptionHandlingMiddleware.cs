@@ -33,6 +33,7 @@ namespace LibraryAPI.Middlewares
             var traceId = Guid.NewGuid().ToString();
             contex.Response.Headers.Add("X-Trace-Id", traceId);
             var (status,titlu) = MapException(ex);
+           
             var problem = new
             {
                 Status = status,

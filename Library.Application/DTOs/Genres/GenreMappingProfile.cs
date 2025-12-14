@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Library.Application.DTOs.Categories;
 using Library.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace Library.Application.DTOs.Genres
     { 
         public GenreMappingProfile()
         {
+
             CreateMap<CreateGenreDto, Genre>()
-                .ReverseMap();
+                  .ReverseMap();
             CreateMap<Genre, GenreDto>()
                 .ReverseMap();
         }
+    
     }
 }
