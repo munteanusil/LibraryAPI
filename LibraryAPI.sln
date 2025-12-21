@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Infrastructure", "L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Tests", "LibraryTest\Library.Tests.csproj", "{09119ED4-B67F-A33E-EDA1-7BBC6C891829}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthApi", "AuthApi\AuthApi.csproj", "{17A56E6B-6BAF-4646-8180-91F419A9083D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{09119ED4-B67F-A33E-EDA1-7BBC6C891829}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09119ED4-B67F-A33E-EDA1-7BBC6C891829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09119ED4-B67F-A33E-EDA1-7BBC6C891829}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17A56E6B-6BAF-4646-8180-91F419A9083D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17A56E6B-6BAF-4646-8180-91F419A9083D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17A56E6B-6BAF-4646-8180-91F419A9083D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17A56E6B-6BAF-4646-8180-91F419A9083D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

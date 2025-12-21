@@ -1,10 +1,5 @@
-using Library.Infrastructure.Extensions;
-using LibraryAPI.Middlewares;
-using Microsoft.AspNetCore.Diagnostics;
-using System.Text.Json.Serialization;
 
-
-namespace LibraryAPI
+namespace AuthApi
 {
     public class Program
     {
@@ -14,17 +9,11 @@ namespace LibraryAPI
 
             // Add services to the container.
 
-            builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
-
+            builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.ConfigureEFCore(builder.Configuration);
-            builder.Services.ConfigureRepositories();
-            builder.Services.ConfigureAutoMapper();
-            builder.Services.ConfigureValidation();
-            
-                
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -36,8 +25,6 @@ namespace LibraryAPI
 
             app.UseHttpsRedirection();
 
-            app.UseMiddleware<ExceptionHandlingMiddleware>();
-            app.UseAuthentication();
             app.UseAuthorization();
 
 

@@ -14,6 +14,8 @@ namespace Library.Infrastructure.Data
         public DbSet<AuthorGenres> AuthorGenres { get; set; }
 
         public DbSet<Genre> Genres { get; set; }
+
+        public DbSet<User> Users { get; set; }
         public LibraryContext(DbContextOptions<LibraryContext> options) :base(options)
         {
             
