@@ -1,6 +1,7 @@
-@LibraryAPI_HostAddress = http://localhost:5036
+@LibraryAPI_HostAddress = https://localhost:7052/
 
 GET {{LibraryAPI_HostAddress}}/weatherforecast/
 Accept: application/json
+Autorization: Bearear 
 
 ###
