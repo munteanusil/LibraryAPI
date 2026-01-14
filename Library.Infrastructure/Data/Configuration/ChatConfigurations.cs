@@ -26,14 +26,17 @@ namespace Library.Infrastructure.Data.Configuration
             .HasMaxLength(256);
 
             builder.Property(p => p.UserName)
-           .HasMaxLength(256);
+            .HasMaxLength(256);
 
             builder.Property(b => b.IsForm)
-          .HasDefaultValue(false);
+             .HasDefaultValue(false);
 
-            builder.HasMany(p => p.AuthorGenres)
-                  .WithOne(b => b.Author)
-                  .HasForeignKey(b => b.AuthorId)
+            builder.Property(b => b.Type)
+                .HasMaxLength(100);
+
+            builder.HasMany(p => p.ChatNotifications)
+                  .WithOne(b => b.Chat)
+                  .HasForeignKey(b => b.ChatId )
                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
