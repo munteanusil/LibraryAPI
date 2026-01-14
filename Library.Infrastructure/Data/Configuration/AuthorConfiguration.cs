@@ -23,6 +23,7 @@ namespace Library.Infrastructure.Data.Configuration
             builder.Property(p => p.LastName)
                  .HasMaxLength(50)
                  .IsRequired();
+
             builder.Property(p => p.Site)
                   .HasMaxLength(256)
                   .IsRequired();
