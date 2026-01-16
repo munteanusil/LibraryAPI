@@ -25,7 +25,7 @@ namespace Library.Infrastructure.Data.Configuration
 
 
             builder.HasOne(c => c.Notification)
-                .WithMany(c => c.ChatNotifications)
+                .WithMany(c => c.ChatsNotifications)
                 .HasForeignKey(c => c.NotificationId)
                 .OnDelete(DeleteBehavior.Restrict);
 

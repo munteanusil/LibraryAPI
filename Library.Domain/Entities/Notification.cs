@@ -9,7 +9,7 @@ namespace Library.Domain.Entities
 {
     public class Notification
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public NotificationType NotificationType { get; set; }
 

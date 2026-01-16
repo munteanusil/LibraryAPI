@@ -19,7 +19,7 @@ namespace Library.Infrastructure.Data.Configuration
             builder.HasKey(c => c.Id);
             builder.Property(c =>c.NotificationType)
                 .HasConversion(new EnumToNumberConverter<NotificationType,int>());
-            builder.HasMany(c =>c.ChatNotifications)
+            builder.HasMany(c =>c.ChatsNotifications)
                 .WithOne(c =>c.Notification)
                 .HasForeignKey(c =>c.NotificationId)
                 .OnDelete(DeleteBehavior.Restrict);

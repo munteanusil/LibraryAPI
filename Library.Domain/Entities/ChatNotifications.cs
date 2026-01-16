@@ -8,7 +8,7 @@ namespace Library.Domain.Entities
 {
     public class ChatNotifications
     {
-        public int NotificationId { get; set; }
+        public long NotificationId { get; set; }
 
         public Notification? Notification { get; set; }
 

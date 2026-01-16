@@ -1,4 +1,5 @@
 using Library.Infrastructure.Extensions;
+using LibraryAPI.Handlers.Authentification;
 using LibraryAPI.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
@@ -30,8 +31,19 @@ namespace LibraryAPI
             builder.Services.ConfigureValidation();
             builder.Services.AddAuthentication(o =>
             {
-                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultAuthenticateScheme = "Multi";
+                o.DefaultChallengeScheme = "Multi";
+            })
+            .AddPolicyScheme("Multi", "Multi", o =>
+            {
+                o.ForwardDefaultSelector = ctx =>
+                {
+                    if (ctx.Request.Headers.ContainsKey("x-app-name"))
+                    {
+                        return "AppHeader";
+                    }
+                    return JwtBearerDefaults.AuthenticationScheme;
+                };
             })
             .AddJwtBearer(o =>
             o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
@@ -44,41 +56,65 @@ namespace LibraryAPI
                 ValidAudience = builder.Configuration["JwtSettings:Audience"],
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
 
+            })
+            .AddScheme<AppHeaderAuthOptions, AppHeaderAuthentificationHandler>("AppHeader", o =>
+            {
+                o.AllowedNames = builder.Configuration.GetSection("AppHeaderAuth:AllowedNames").Get<string[]>() ?? Array.Empty<string>();
             });
 
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
 
-                
+
                 var securityScheme = new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http,
-                    Scheme = "bearer",             
+                    Scheme = "bearer",
                     BearerFormat = "JWT"
                 };
 
-               
+
                 c.AddSecurityDefinition("Bearer", securityScheme);
 
-               
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
+                var appheader = new OpenApiSecurityScheme
                 {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer" 
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
+                    Name = "x-app-name",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Description = "Set wirth one of configuration app names",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "AppHeader"
+                    }
+                };
+
+                c.AddSecurityDefinition("AppHeader", appheader);
+
+                //var openSecurityScheme = new OpenApiSecurityScheme
+                //{
+                //    Reference = new OpenApiReference
+                //    {
+                //        Type = ReferenceType.SecurityScheme,
+                //        Id = "Bearer"
+                //    }
+                //};
+
+                //var securityRequirement = new OpenApiSecurityRequirement
+                //{
+                //    {openSecurityScheme,Array.Empty<string>()} 
+                //};
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {new OpenApiSecurityScheme {Reference =  new OpenApiReference{Type = ReferenceType.SecurityScheme,Id = "Bearer"} }, Array.Empty<string>()},
+                    {new OpenApiSecurityScheme {Reference =  new OpenApiReference{Type = ReferenceType.SecurityScheme,Id = "AppHeader"} }, Array.Empty<string>()} 
+                });
+
             });
 
             var app = builder.Build();

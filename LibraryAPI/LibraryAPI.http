@@ -1,7 +1,6 @@
 @LibraryAPI_HostAddress = https://localhost:7052/
 
-GET {{LibraryAPI_HostAddress}}/weatherforecast/
+GET {{LibraryAPI_HostAddress}}Authors?Page=1&PageSize=23
 Accept: application/json
-Autorization: Bearear 
-
+x-app-name: Library-bot-app
 ###
