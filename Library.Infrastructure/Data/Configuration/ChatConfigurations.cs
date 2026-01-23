@@ -15,8 +15,7 @@ namespace Library.Infrastructure.Data.Configuration
         {
             builder.ToTable("chats");
             builder.HasKey(x => x.Id);
-            builder.Property(p => p.UserId)
-            .IsRequired();
+         
 
             builder.Property(p => p.FirstName)
             .HasMaxLength(256);

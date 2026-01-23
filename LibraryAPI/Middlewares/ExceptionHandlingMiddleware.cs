@@ -22,7 +22,7 @@ namespace LibraryAPI.Middlewares
             }
             catch(Exception ex)
             {
-                FormatGlobalException(context,ex);
+                await FormatGlobalException(context,ex);
             }
           
 

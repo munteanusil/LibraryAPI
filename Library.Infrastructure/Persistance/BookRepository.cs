@@ -23,8 +23,8 @@ namespace Library.Infrastructure.Persistance
         }
         public async Task CreateBook(Book book, CancellationToken ct = default)
         {
-           _libraryContext.Books.AddAsync(book,ct);
-           _libraryContext.SaveChangesAsync();
+            await _libraryContext.Books.AddAsync(book); 
+            await _libraryContext.SaveChangesAsync(ct);
         }
 
         public async Task DeleteBook(int id, CancellationToken ct = default)
