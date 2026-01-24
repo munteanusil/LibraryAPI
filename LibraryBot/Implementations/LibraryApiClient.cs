@@ -13,13 +13,17 @@ namespace LibraryBot.Implementations
     public class LibraryApiClient : ILibraryApiClient
     {
         private readonly HttpClient _client;
-        public LibraryApiClient(IHttpClientFactory httpClientFactory)
+
+  
+        public LibraryApiClient(HttpClient client)
         {
-            _client = httpClientFactory.CreateClient(Constants.LibraryApiClient);
+            _client = client;
         }
-        public async Task<BookDto> GetBookById(int id, CancellationToken ct)
+
+        public async Task<BookDto?> GetBookById(int id, CancellationToken ct)
         {
-            return await _client.GetFromJsonAsync<BookDto?>($"/Books/{id}", ct);
+        
+            return await _client.GetFromJsonAsync<BookDto?>($"Book/{id}", ct);
         }
 
         public Task<PaginatedList<BookDto>> GetPaginatedBooks(int pageSize, int pageIndex, CancellationToken ct)
@@ -28,3 +32,4 @@ namespace LibraryBot.Implementations
         }
     }
 }
+
