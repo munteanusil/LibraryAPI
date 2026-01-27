@@ -9,24 +9,22 @@ using System.Threading.Tasks;
 
 namespace Library.Infrastructure.Data.Configuration
 {
-    public class AuthorGenereConfiguration : IEntityTypeConfiguration<AuthorGenres>
+    public class AuthorGenreConfiguration : IEntityTypeConfiguration<AuthorGenres>
     {
         public void Configure(EntityTypeBuilder<AuthorGenres> builder)
         {
             builder.ToTable("author_genres");
-            builder.HasKey(p => new { p.AuthorId,p.GenreId});
+            builder.HasKey(p => new { p.AuthorId, p.GenreId });
 
-          
-            builder.HasOne(b => b.Author)
-                    .WithMany(c => c.AuthorGenres)
-                    .HasForeignKey(b => b.AuthorId)
-                    .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(p => p.Author)
+                .WithMany(b => b.AuthorGenres)
+                .HasForeignKey(b => b.AuthorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(b => b.Genre)
-                    .WithMany(c => c.AuthorGeneres)
-                    .HasForeignKey(b => b.GenreId)
-                    .OnDelete(DeleteBehavior.Restrict);
-
+            builder.HasOne(p => p.Genre)
+                .WithMany(b => b.AuthorGeneres)
+                .HasForeignKey(b => b.GenreId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -11,24 +11,24 @@ using System.Threading.Tasks;
 
 namespace Library.Infrastructure.Data.Configuration
 {
+
     public class ChatNotificationConfigurations : IEntityTypeConfiguration<ChatNotifications>
     {
         public void Configure(EntityTypeBuilder<ChatNotifications> builder)
         {
             builder.ToTable("chat_notifications");
-            builder.HasKey(c => new {c.ChatId,c.NotificationId});
-      
-            builder.HasOne(c =>c.Chat)
-                .WithMany(c =>c.ChatNotifications )
-                .HasForeignKey(c =>c.NotificationId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.HasKey(c => new { c.ChatId, c.NotificationId });
 
+            builder.HasOne(c => c.Chat)
+                .WithMany(c => c.ChatNotifications)
+                .HasForeignKey(c => c.ChatId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(c => c.Notification)
                 .WithMany(c => c.ChatsNotifications)
                 .HasForeignKey(c => c.NotificationId)
                 .OnDelete(DeleteBehavior.Restrict);
-
         }
     }
+
 }

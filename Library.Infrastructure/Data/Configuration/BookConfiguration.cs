@@ -17,26 +17,31 @@ namespace Library.Infrastructure.Data.Configuration
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
+
             builder.Property(p => p.Title)
-                   .HasMaxLength(50)
-                   .IsRequired();
+                .HasMaxLength(50)
+                .IsRequired();
+
             builder.Property(p => p.ISBN)
-                 .HasMaxLength(50)
-                 .IsRequired();
+                .HasMaxLength(50)
+                .IsRequired();
+
+            builder.Property(p => p.CreatedAt)
+                .HasDefaultValue(DateTime.UtcNow)
+                .IsRequired();
 
             builder.Property(p => p.Stock)
-                  .IsRequired();
+                .IsRequired();
 
             builder.HasOne(p => p.Author)
-                  .WithMany(b => b.Books)
-                  .HasForeignKey(b => b.AuthorId)
-                  .OnDelete(DeleteBehavior.Restrict);
+                .WithMany(b => b.Books)
+                .HasForeignKey(b => b.AuthorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(b => b.Category)
-                    .WithMany(c => c.Books)
-                    .OnDelete(DeleteBehavior.Restrict);
-  
+                .WithMany(c => c.Books)
+                .HasForeignKey(c => c.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
-         
     }
 }

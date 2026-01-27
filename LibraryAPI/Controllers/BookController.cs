@@ -17,48 +17,41 @@ namespace LibraryAPI.Controllers
     [ApiController]
     [Route("[controller]")]
     [Authorize]
-
-    public class BookController : Controller
+    public class BooksController : ControllerBase
     {
-        private readonly ILogger<BookController> _logger;
         private readonly IBookRepository _repository;
         private readonly IMapper _mapper;
-      
-        public BookController(IBookRepository repository,
+
+        public BooksController(IBookRepository repository,
             IMapper mapper)
         {
-            _repository= repository;
+            _repository = repository;
             _mapper = mapper;
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Post(CreateBookDto bookDto, CancellationToken cancellationToken)
         {
-               var bookToCreate = _mapper.Map<Book>(bookDto); 
-                await _repository.CreateBook(bookToCreate, cancellationToken);
-                return CreatedAtAction(nameof(Get),new {id = bookToCreate.Id},_mapper.Map<BookDto>(bookToCreate));
-            
-
+            var bookToCreate = _mapper.Map<Book>(bookDto);
+            await _repository.CreateBook(bookToCreate, cancellationToken);
+            return CreatedAtAction(nameof(Get), new { id = bookToCreate.Id }, _mapper.Map<BookDto>(bookToCreate));
         }
 
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] PaginatedDto dto, CancellationToken cancellationToken)
         {
-          
-               
-            var books = await _repository.GetBooks(dto.Page, dto.PageSize);
-            var booksDto = _mapper.Map<List<BookDto>>(books.Items);
-            var result = new PaginatedList<BookDto>(booksDto, dto.Page, dto.PageSize);
+
+            var paginatedBooks = await _repository.GetBooks(dto.Page, dto.PageSize, cancellationToken);
+            var bookDtos = _mapper.Map<List<BookDto>>(paginatedBooks.Items);
+            var result = new PaginatedList<BookDto>(bookDtos, dto.Page, paginatedBooks.TotalPages);
             return Ok(result);
         }
 
-
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
         {
             var book = await _repository.GetBookById(id, cancellationToken);
-            if(book == null)
+            if (book == null)
             {
                 return NotFound();
             }
@@ -66,20 +59,18 @@ namespace LibraryAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(BookDto bookdto, CancellationToken cancellationToken)
+        public async Task<IActionResult> Put(BookDto bookDto, CancellationToken cancellationToken)
         {
-           
-                await _repository.UpdateBook(_mapper.Map<Book>(bookdto),cancellationToken);
-                return Ok();
-            
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int id,CancellationToken cancellationToken)
-        {
-            await _repository.DeleteBook(id,cancellationToken);
+            await _repository.UpdateBook(_mapper.Map<Book>(bookDto), cancellationToken);
             return Ok();
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+        {
+            await _repository.DeleteBook(id, cancellationToken);
+            return Ok();
+        }
     }
+
 }

@@ -20,8 +20,8 @@ namespace LibraryAPI
 
             // Add services to the container.
 
-            builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
-
+            builder.Services.AddControllers();
+            //.AddJsonOptions(options =>options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -46,16 +46,17 @@ namespace LibraryAPI
                 };
             })
             .AddJwtBearer(o =>
-            o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
             {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-                ValidAudience = builder.Configuration["JwtSettings:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
-
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
+                };
             })
             .AddScheme<AppHeaderAuthOptions, AppHeaderAuthentificationHandler>("AppHeader", o =>
             {
@@ -65,19 +66,20 @@ namespace LibraryAPI
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-
-
                 var securityScheme = new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Description = "Enter: Berear {your token}",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http,
                     Scheme = "bearer",
-                    BearerFormat = "JWT"
+                    BearerFormat = "JWT",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
                 };
-
-
                 c.AddSecurityDefinition("Bearer", securityScheme);
 
                 var appheader = new OpenApiSecurityScheme
@@ -85,14 +87,13 @@ namespace LibraryAPI
                     Name = "x-app-name",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
-                    Description = "Set wirth one of configuration app names",
+                    Description = "Set wirth one of configurated app names",
                     Reference = new OpenApiReference
                     {
                         Type = ReferenceType.SecurityScheme,
                         Id = "AppHeader"
                     }
                 };
-
                 c.AddSecurityDefinition("AppHeader", appheader);
 
                 //var openSecurityScheme = new OpenApiSecurityScheme
@@ -103,18 +104,15 @@ namespace LibraryAPI
                 //        Id = "Bearer"
                 //    }
                 //};
-
                 //var securityRequirement = new OpenApiSecurityRequirement
                 //{
-                //    {openSecurityScheme,Array.Empty<string>()} 
+                //    {openSecurityScheme, Array.Empty<string>() }
                 //};
-
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
-                    {new OpenApiSecurityScheme {Reference =  new OpenApiReference{Type = ReferenceType.SecurityScheme,Id = "Bearer"} }, Array.Empty<string>()},
-                    {new OpenApiSecurityScheme {Reference =  new OpenApiReference{Type = ReferenceType.SecurityScheme,Id = "AppHeader"} }, Array.Empty<string>()} 
+                    { new OpenApiSecurityScheme {Reference = new OpenApiReference{Type = ReferenceType.SecurityScheme,Id = "Bearer"}}, Array.Empty<string>() },
+                    { new OpenApiSecurityScheme {Reference =  new OpenApiReference {Type = ReferenceType.SecurityScheme,Id = "AppHeader"} }, Array.Empty<string>() }
                 });
-
             });
 
             var app = builder.Build();

@@ -16,59 +16,53 @@ namespace LibraryAPI.Controllers
     [ApiController]
     [Route("[controller]")]
     [Authorize]
-
-    public class CategoryController : Controller
+    public class CategoryController : ControllerBase
     {
-        private readonly ILogger<CategoryController> _logger;
         private readonly ICategoryRepository _repository;
         private readonly IMapper _mapper;
-      
+
         public CategoryController(ICategoryRepository repository,
             IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(CreateCategoryDto categoryDto, CancellationToken cancellationToken)
         {
-            var categortyToCreate = _mapper.Map<Category>(categoryDto);
-            await _repository.CreateCategory(categortyToCreate, cancellationToken);
-            return CreatedAtAction(nameof(Get), new { id = categortyToCreate.Id, categortyToCreate });
-         
-          
+            var categoryToCreate = _mapper.Map<Category>(categoryDto);
+            await _repository.CreateCategory(categoryToCreate, cancellationToken);
+            return CreatedAtAction(nameof(Get), new { id = categoryToCreate.Id }, categoryToCreate);
         }
 
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] PaginatedDto dto, CancellationToken cancellationToken)
         {
+
             var categories = await _repository.GetCategorys(dto.Page, dto.PageSize, cancellationToken);
-            var categoriesDtos = _mapper.Map<List<CategoryDto>>(categories.Items);
-            var result = new PaginatedList<CategoryDto>(categoriesDtos, dto.Page, dto.PageSize);
-            return Ok(result);  
+            var categoriDtos = _mapper.Map<List<CategoryDto>>(categories.Items);
+            var result = new PaginatedList<CategoryDto>(categoriDtos, dto.Page, categories.TotalPages);
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id,CancellationToken cancellationToken)
+        public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
         {
             var category = await _repository.GetCategoryById(id, cancellationToken);
-            if(category == null)
+            if (category == null)
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<CreateCategoryDto>(category));
+            return Ok(_mapper.Map<CategoryDto>(category));
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(CategoryDto categoryDto,CancellationToken cancellationToken)
+        public async Task<IActionResult> Put(CategoryDto categoryDto, CancellationToken cancellationToken)
         {
-          
-                await _repository.UpdateCategory(_mapper.Map<Category>(categoryDto), cancellationToken);
-                return Ok();   
+            await _repository.UpdateCategory(_mapper.Map<Category>(categoryDto), cancellationToken);
+            return Ok();
         }
-
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)

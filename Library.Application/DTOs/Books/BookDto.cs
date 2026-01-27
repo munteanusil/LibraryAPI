@@ -17,14 +17,11 @@ namespace Library.Application.DTOs.Books
 
         public override string ToString()
         {
-            return $"📖 *Detalii Carte*\n\n" +
-            $"🆔 **ID**: {Id}\n" +
-            $"📚 **Titlu**: {Title}\n" +
-            $"✍️ **Autor**: {Author}\n" + 
-            $"🔢 **ISBN**: {ISBN}";
+            return $"BookId: {Id} \n" +
+                $"BookTitle: {Title}\n" +
+                $"ISBN: {ISBN}";
         }
-
     }
-    
-    
+
+
 }

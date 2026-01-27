@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 namespace Library.Application.DTOs.Genres
 {
     public class GenreMappingProfile : Profile
-    { 
+    {
         public GenreMappingProfile()
         {
-
             CreateMap<CreateGenreDto, Genre>()
-                  .ReverseMap();
+                .ReverseMap();
             CreateMap<Genre, GenreDto>()
                 .ReverseMap();
         }
-    
+
     }
 }

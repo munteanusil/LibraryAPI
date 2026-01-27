@@ -36,5 +36,6 @@ namespace Library.Domain.Entities
         public ICollection<AuthorGenres>? AuthorGenres { get; set; }
 
         public ICollection<Book>? Books { get; set; }
+        public DateTime BirthDate { get; set; }
     }
 }

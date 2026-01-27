@@ -24,5 +24,6 @@ namespace Library.Domain.Entities
         public int AuthorId { get; set; }
 
         public Author? Author { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

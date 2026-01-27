@@ -25,9 +25,9 @@ public class GenreController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(CreateGenreDto genreDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> Post(CreateGenreDto categoryDto, CancellationToken cancellationToken)
     {
-        var genreToCreate = _mapper.Map<Genre>(genreDto);
+        var genreToCreate = _mapper.Map<Genre>(categoryDto);
         await _repository.CreateGenre(genreToCreate, cancellationToken);
         return CreatedAtAction(nameof(Get), new { id = genreToCreate.Id }, genreToCreate);
     }

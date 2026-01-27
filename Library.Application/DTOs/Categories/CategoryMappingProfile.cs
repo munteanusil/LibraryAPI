@@ -12,19 +12,9 @@ namespace Library.Application.DTOs.Categories
     {
         public CategoryMappingProfile()
         {
-
             CreateMap<Category, CategoryDto>()
-               .ReverseMap()
-               .ForMember(dest => dest.Id, opt => opt.Ignore()); 
-
-            CreateMap<CreateCategoryDto, Category>()
                 .ReverseMap();
-
-         
-            CreateMap<CategoryDto, Category>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Books, opt => opt.Ignore());
+            CreateMap<CreateCategoryDto, Category>();
         }
     }
 }

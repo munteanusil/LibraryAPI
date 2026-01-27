@@ -14,14 +14,12 @@ namespace Library.Application.DTOs.Authors
 
         public string? LastName { get; set; }
 
-        public string? Nationality { get; set; }
-
-        public string? Biography { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public string? Site { get; set; }
-        
+
         public ICollection<BookDto>? Books { get; set; }
 
-        public ICollection<int> GenreIds { get; set; }
+        public ICollection<int> GenrIds { get; set; }
     }
 }

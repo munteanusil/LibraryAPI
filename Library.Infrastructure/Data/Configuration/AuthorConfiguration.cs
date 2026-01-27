@@ -14,29 +14,35 @@ namespace Library.Infrastructure.Data.Configuration
         public void Configure(EntityTypeBuilder<Author> builder)
         {
             builder.ToTable("authors");
-            builder.HasKey(p =>p.Id);
+            builder.HasKey(p => p.Id);
             builder.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
+
             builder.Property(p => p.FirstName)
-                   .HasMaxLength(50)
-                   .IsRequired();
+                .HasMaxLength(50)
+                .IsRequired();
+
             builder.Property(p => p.LastName)
-                 .HasMaxLength(50)
-                 .IsRequired();
+                .HasMaxLength(50)
+                .IsRequired();
+
+            builder.Property(p => p.BirthDate)
+                .IsRequired();
 
             builder.Property(p => p.Site)
-                  .HasMaxLength(256)
-                  .IsRequired();
+                .HasMaxLength(256)
+                .IsRequired();
 
             builder.HasMany(p => p.Books)
-                  .WithOne(b =>b.Author)
-                  .HasForeignKey(b => b.AuthorId)
-                  .OnDelete(DeleteBehavior.Restrict);
+                .WithOne(b => b.Author)
+                .HasForeignKey(b => b.AuthorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(p => p.AuthorGenres )
-                  .WithOne(b => b.Author)
-                  .HasForeignKey(b => b.AuthorId)
-                  .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(p => p.AuthorGenres)
+                .WithOne(b => b.Author)
+                .HasForeignKey(b => b.AuthorId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

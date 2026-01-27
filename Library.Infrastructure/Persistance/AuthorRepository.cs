@@ -15,13 +15,14 @@ namespace Library.Infrastructure.Persistance
     {
         private readonly LibraryContext _libraryContext;
         private static readonly Func<LibraryContext, int, Task<Author?>> GetAuthorByIdCompiled = EF.CompileAsyncQuery((LibraryContext context, int id) => context.Authors.FirstOrDefault(a => a.Id == id));
+
         public AuthorRepository(LibraryContext libraryContext)
         {
             _libraryContext = libraryContext;
         }
-        public async Task CreateAuthor(Author author, CancellationToken ct = default)
+        public async Task CreateAuthor(Author book, CancellationToken ct = default)
         {
-            await _libraryContext.Authors.AddAsync(author, ct);
+            await _libraryContext.Authors.AddAsync(book, ct);
             await _libraryContext.SaveChangesAsync(ct);
         }
 
@@ -37,8 +38,7 @@ namespace Library.Infrastructure.Persistance
         }
 
         public async Task<Author?> GetAuthorById(int id, CancellationToken ct = default) =>
-           await GetAuthorByIdCompiled(_libraryContext, id);
-
+            await GetAuthorByIdCompiled(_libraryContext, id);
 
         public async Task<PaginatedList<Author>> GetAuthors(int page, int pageSize, CancellationToken ct = default)
         {
@@ -46,6 +46,7 @@ namespace Library.Infrastructure.Persistance
             var authors = await _libraryContext.Authors
                 .AsNoTracking()
                 .OrderBy(a => a.Id)
+                .Include(a => a.Books)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync(ct);
@@ -55,47 +56,32 @@ namespace Library.Infrastructure.Persistance
 
         public async Task UpdateAuthor(Author author, CancellationToken ct = default)
         {
-            if (author == null) return;
-
-           
-            var dbAuthor = await _libraryContext.Authors
-                .Include(a => a.AuthorGenres)
-                .FirstOrDefaultAsync(a => a.Id == author.Id, ct);
-
-            if (dbAuthor == null) return;
-
-            
-            _libraryContext.Entry(dbAuthor).CurrentValues.SetValues(author);
-
-            
             if (author.AuthorGenres != null)
             {
-               
-                var genresToRemove = dbAuthor.AuthorGenres
-                    .Where(dbG => !author.AuthorGenres.Any(aG => aG.GenreId == dbG.GenreId))
-                    .ToList();
-
-            
-                var genresToAdd = author.AuthorGenres
-                    .Where(aG => !dbAuthor.AuthorGenres.Any(dbG => dbG.GenreId == aG.GenreId))
-                    .Select(aG => new AuthorGenres 
+                var existingAuthorGenres = await _libraryContext.AuthorGenres.AsNoTracking().Where(a => a.AuthorId == author.Id).ToListAsync(ct);
+                var genresToAdd = new List<AuthorGenres>();
+                var genresToRemove = new List<AuthorGenres>();
+                foreach (var genre in author.AuthorGenres)
+                {
+                    if (!existingAuthorGenres.Any(g => g.GenreId == genre.GenreId))
                     {
-                        AuthorId = author.Id,
-                        GenreId = aG.GenreId
-                    })
-                    .ToList();
-
-                if (genresToRemove.Any())
-                {
-                    _libraryContext.AuthorGenres.RemoveRange(genresToRemove);
+                        genresToAdd.Add(genre);
+                    }
                 }
 
-                if (genresToAdd.Any())
+                foreach (var genre in existingAuthorGenres)
                 {
-                    await _libraryContext.AuthorGenres.AddRangeAsync(genresToAdd, ct);
+                    if (!author.AuthorGenres.Any(g => g.GenreId == genre.GenreId))
+                    {
+                        genresToRemove.Add(genre);
+                    }
                 }
+
+                _libraryContext.AuthorGenres.RemoveRange(genresToRemove);
+                await _libraryContext.AuthorGenres.AddRangeAsync(genresToAdd);
             }
 
+            _libraryContext.Authors.Update(author);
             await _libraryContext.SaveChangesAsync(ct);
         }
     }

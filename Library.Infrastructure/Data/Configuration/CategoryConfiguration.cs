@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Library.Infrastructure.Data.Configuration
 {
-    public class GenereConfiguration : IEntityTypeConfiguration<Genre>
+    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
-        public void Configure(EntityTypeBuilder<Genre> builder)
+        public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.ToTable("genres");
+            builder.ToTable("Categories");
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
@@ -22,10 +22,9 @@ namespace Library.Infrastructure.Data.Configuration
                 .HasMaxLength(50)
                 .IsRequired();
 
-            builder.HasMany(p => p.AuthorGeneres)
-                .WithOne(b => b.Genre)
-                .HasForeignKey(b => b.GenreId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Property(p => p.TotalBooks)
+                .IsRequired()
+                .HasDefaultValue(0);
         }
     }
 }

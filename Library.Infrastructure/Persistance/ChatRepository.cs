@@ -16,12 +16,21 @@ namespace Library.Infrastructure.Persistance
 
         public ChatRepository(LibraryContext context)
         {
-           _context = context;
+            _context = context;
         }
         public async Task CreateChat(Chat chat, CancellationToken ct = default)
         {
-           await _context.Chats.AddAsync(chat,ct);
-           await _context.SaveChangesAsync(ct);
+            await _context.Chats.AddAsync(chat, ct);
+            await _context.SaveChangesAsync(ct);
+        }
+
+        public async Task<List<ChatNotifications>> GetAllChatsForNewBookNotification(CancellationToken ct)
+        {
+            return await _context.ChatNotifications
+                .AsNoTracking()
+                .Include(n => n.Notification)
+                .Where(n => n.Notification.NotificationType == Domain.Enums.NotificationType.NewBookNotification)
+                .ToListAsync(ct);
         }
 
         public async Task<Chat?> GetChat(long id, CancellationToken ct = default)
